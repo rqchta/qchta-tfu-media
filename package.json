@@ -1,9 +1,9 @@
 {
-  "name": "crwn-clothing-server",
+  "name": "qchta-tfu-media-server",
   "version": "1.0.0",
   "engines": {
-    "node": "10.15.3",
-    "npm": "6.4.1"
+    "node": "16.15.1",
+    "npm": "8.11.0"
   },
   "scripts": {
     "client": "cd client && yarn start",
@@ -18,10 +18,11 @@
     "cors": "2.8.5",
     "dotenv": "7.0.0",
     "express": "^4.16.4",
+    "firebase": "^9.9.1",
     "stripe": "6.28.0"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1",
-    "nodemon": "^1.19.1"
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19"
   }
 }
