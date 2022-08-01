@@ -1,23 +1,32 @@
-import { createStore, applyMiddleware } from 'redux';
-import { persistStore } from 'redux-persist';
-import logger from 'redux-logger';
-import createSagaMiddleware from 'redux-saga';
+import { compose, configureStore } from "@reduxjs/toolkit"
+import { persistStore } from "redux-persist"
+import logger from "redux-logger"
+import createSagaMiddleware from "redux-saga"
 
-import rootReducer from './root-reducer';
-import rootSaga from './root-saga';
+import persistReducer from "./root-reducer"
+import rootSaga from "./root-saga"
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware()
 
-const middlewares = [sagaMiddleware];
+const middlewares = [sagaMiddleware]
 
-if (process.env.NODE_ENV === 'development') {
-  middlewares.push(logger);
+if (process.env.NODE_ENV === "development") {
+  middlewares.push(logger)
 }
 
-export const store = createStore(rootReducer, applyMiddleware(...middlewares));
+const composeEnhancer =
+  (process.env.NODE_ENV !== "production" && window && window.__REDUX_DEVTOOL_EXTENSION_COMPOSE__) ||
+  compose
 
-sagaMiddleware.run(rootSaga);
+export const store = configureStore({
+  reducer: persistReducer,
+  middleware: middlewares,
+  compose: composeEnhancer
+})
 
-export const persistor = persistStore(store);
+sagaMiddleware.run(rootSaga)
 
-export default { store, persistStore };
+export const persistor = persistStore(store)
+
+// eslint-disable-next-line
+export default { store, persistStore }
